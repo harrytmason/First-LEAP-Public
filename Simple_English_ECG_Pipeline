@@ -1,0 +1,37 @@
+I have another paper! Actually, I have a couple, but this is my main paper that’s come out of my time at the University of York. Many thanks to my supervisors and co-workers for helping support me during this time. I’ve tried to write a simple English explanation to allow everyone to understand.
+
+https://www.mdpi.com/2624-6120/5/1/7
+
+Quick Summary: I’ve been working on improving the way we take the ECG of an infant and turn it into a heart rate. This includes identifying areas where it is not possible to calculate the heart rate. 
+
+*What is an ECG*
+Your body uses electricity to control your heart. It can make your heart contract quickly (like squeezing a non-tied water balloon) to force blood around your body. An ECG – or electrocardiogram – is a way to measure that electricity.
+
+*How do we get heart rate from an ECG*
+Different parts of a heartbeat require different amounts of electricity. One part produces a sharp spike in electricity. If you remember monitors from TV, it’s the bit that goes *beep*. Each of those peaks represent one heartbeat. By finding out the time between peaks, we can find the rate at which the heart is beating – aka, the heart rate!
+There are actually a couple of peaks, but only one that is really sharp. We are looking for the “R-peak”.
+
+*How do we detect the R-peaks in infants?*
+There’s lots of ways! The issue is, they were all developed on adults, and an infant’s heart beats *way* faster than an adult’s heart. This means the algorithms aren’t as effective, as they are looking for a different shape than they should be. Additionally, we wanted to measure an infant’s heart as they moved around, which makes the signal incredibly hard to read. We tested all the existing ways we could find, and then tried to improve on the best method.
+
+*How did you improve on the best method?*
+A signal is made up of lots of parts. We tried to remove the slow moving parts (science friends: a 15 Hz high pass filter) before doing peak detection. We actually tested a wide range of approaches, but this one proved to be the best. 
+Additionally, filtering out all of the slow-moving parts of the signal can change its shape quite significantly! We labelled the peaks on the filtered signal, and then found the nearest match on the original unfiltered signal. 
+
+*So you’ve got a heart rate signal, what now?*
+Now we have to do two things. First, we improve the signal we’ve already got. If our algorithm accidentally adds a peak or misses one, we can see it in the signal. Your heart rate is usually fairly consistent – it doesn’t rise of fall that much from beat to beat. If it suddenly halves or doubles, if implies you’ve missed/added a beat respectively where you shouldn’t have. So, we go through the signal to try to correct these areas. We can also try to correct for slightly mislabelled beats, although we’re less good at that.
+
+*What if you missed or added multiple peaks?*
+Then we don’t know the heart rate at that point! As such, we shouldn’t be claiming we do. I made an algorithm to look at the signal quality which tries to look for the signal jumping around a lot and basically acting in a non-natural way for multiple beats at a time. We then label those beats as unreliable.
+
+*Why were you working on infant ECG?*
+I’ve been working with the psychology department looking at the development of young children. When you pay attention to something, your heart rate actually drops and then stabilizes at that lower heart rate. If an infant has that “drop-then-stabilize” heart rate shape, it indicates an ability to pay attention. However, to see this, we need to be able to calculate heart rate! This was my main job for this project – I just went a little overboard to the point I could produce a separate paper.
+
+*What are the limitations*
+If you are interested in beat-to-beat changes, our way to deal with missing/additional peaks may not be suitable. Our way of determining signal quality is good, but could certainly be improved. Also, if a child’s heart beats in a very non-typical fashion (arrythmias), we may falsely rule good heart rate as bad.
+
+*What are you not telling us here?*
+In the paper, I go into way more detail about different approaches we tried, how effective other methods are, and add information about small parts of the pipeline that don’t make a huge impact but do improve things overall.
+
+*Can you summarize the whole paper?*
+Infant hearts beat very fast. Using ECG, we can see the heart rate – but it beats so fast that normal approaches don’t work as good. We adapt the best approach to achieve even more accurate heart rates. We then try to clean up the heart rate, and try to identify areas which we couldn’t accurately calculate. The whole pipeline is very computationally efficient, able to process hours of data in only seconds. The paper is open access so you’re welcome to give it a go. I’ve tried my best to explain – let me know how I did or if you have any further questions! And very well done if you made it to the end.
